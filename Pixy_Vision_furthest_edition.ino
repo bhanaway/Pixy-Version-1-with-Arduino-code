@@ -5,7 +5,7 @@
 
 
 // Setup Variables
-int sig1 = 4; // designations for when the specific signal is recieved, that specific pin will go high.
+int sig1 = 4; // the pins that will be used when the pixy cam picks up that specific signature.
 int sig2 = 7;
 int sig3 = 8;
 Pixy pixy;
@@ -13,19 +13,20 @@ Pixy pixy;
 
 void setup()
 {
-  // I really need to pick up a better way to spend my saturday nights.
+  // I really need to pick up a better way to spend my saturday nights. That is just a true fact
+  
 Serial.begin(9600);
-Serial.print("Initializing Sentience procedure ... Failed, like usual ;)");
+Serial.print("Starting Serial"); // this is to start the communication between the Arduino and the Pixy cam. Because they communicate through serial.
 delay (200);
-Serial.print("Alright Fucker here you go, knock yourself out");
-pinMode(sig1, OUTPUT); // so they are precieved as an output pin. real shocker there.
+
+pinMode(sig1, OUTPUT); // So a signature can be perceived as an output.
 pinMode(sig2, OUTPUT);
 pinMode(sig3, OUTPUT);
 
 pixy.init();
 }
 void loop() {
-  // The main God DAmn event! You better prepare yourself for the most mind blowing shit you have ever seen!
+  // Very important code section
 static int i = 0;
   int j;
   uint16_t blocks;
@@ -36,7 +37,7 @@ static int i = 0;
   if (blocks)
   {
     i++;
-    
+    // I just copied this and it worked
     // do this (print) every 50 frames because printing every
     // frame would bog down the Arduino
     if (i%50==0)
@@ -50,7 +51,7 @@ static int i = 0;
         pixy.blocks[j].print();
       }
  
- if (pixy.blocks[j].signature == 1)       
+ if (pixy.blocks[j].signature == 1)       //if a pixy block is seen on the pixy it will tell the Arduino through the serial and depending on the signature of 1, 2, or 3 it will run the rest of the code down below turing their indivual pin through a cycle of high and low.
       
   { 
     digitalWrite(sig1, HIGH);
